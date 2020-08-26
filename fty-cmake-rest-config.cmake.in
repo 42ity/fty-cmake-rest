@@ -1,0 +1,15 @@
+@PACKAGE_INIT@
+
+if (NOT FTY_CMAKE_REST_CMAKE_DIR)
+    if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/CMakeFiles")
+        set(FTY_CMAKE_REST_CMAKE_DIR "@CMAKE_CURRENT_SOURCE_DIR@")
+    else()
+        set(FTY_CMAKE_REST_CMAKE_DIR "@PACKAGE_CMAKE_INSTALL_DIR@")
+    endif()
+
+    include(${FTY_CMAKE_REST_CMAKE_DIR}/cmake/ecppbuilder.cmake)
+endif()
+
+if (NOT FTY_CMAKE_REST_CMAKE_FOUND)
+  set(FTY_CMAKE_REST_CMAKE_FOUND ON CACHE INTERNAL "" FORCE)
+endif()

@@ -1,0 +1,19 @@
+Source: fty-cmake-rest
+Maintainer: Clement Perrette <clementperrette@eaton.com>
+Build-Depends:
+    cmake (>=3.13),
+    fty-cmake,
+    pkg-config,
+    debhelper (>= 9)
+Standards-Version: 1.0.0
+Section: devel
+Priority: extra
+
+Package: fty-cmake-rest-dev
+Architecture: any
+Section: devel
+Depends:
+    cmake (>=3.13),
+    fty-cmake,
+    pkg-config
+Description: CMake helper for rest with tntnet 
