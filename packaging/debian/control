@@ -15,7 +15,7 @@ Architecture: any
 Section: devel
 Depends:
     cmake (>=3.13),
-    fty-cmake,
+    fty-cmake-dev,
     libtntnet-dev,
     pkg-config
 Description: CMake helper for rest with tntnet 
