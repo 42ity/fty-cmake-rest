@@ -3,6 +3,7 @@ Maintainer: Clement Perrette <clementperrette@eaton.com>
 Build-Depends:
     cmake (>=3.13),
     fty-cmake-dev,
+    libtntnet-dev,
     pkg-config,
     debhelper (>= 9)
 Standards-Version: 1.0.0
@@ -15,5 +16,6 @@ Section: devel
 Depends:
     cmake (>=3.13),
     fty-cmake,
+    libtntnet-dev,
     pkg-config
 Description: CMake helper for rest with tntnet 
