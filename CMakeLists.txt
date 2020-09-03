@@ -15,8 +15,14 @@ find_package(fty-cmake PATHS ${CMAKE_BINARY_DIR}/fty-cmake)
 ##############################################################################################################
 
 etn_target(interface ${PROJECT_NAME}
+    PUBLIC
+        fty/rest-support.h
+        fty/error-string.h
     CMAKE
         cmake/ecppbuilder.cmake
+    USES_PUBLIC
+        fty-utils
+        fty-pack
 )
 
 ##############################################################################################################
