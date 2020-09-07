@@ -29,6 +29,7 @@
 <%request>
 </%request>
 <%cpp>
+    (void)main();
     request.getPathInfo();
     reply.setContentType("application/json;charset=UTF-8");
     reply.out() << "{\"test\":\"test\"}";

@@ -42,7 +42,7 @@ macro(fty_ecppbuilder)
             DEPENDS ${ecppf}
         )
         target_sources(${arg_TARGET} PRIVATE ${result})
-        #target_sources(${arg_TARGET} PRIVATE ${ecppf})
+        target_sources(${arg_TARGET} PRIVATE ${ecppf})
 
     endforeach()
 
