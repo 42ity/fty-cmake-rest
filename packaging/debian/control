@@ -3,6 +3,7 @@ Maintainer: Clement Perrette <clementperrette@eaton.com>
 Build-Depends:
     cmake (>=3.13),
     fty-cmake-dev,
+    fty-utils-dev,
     libtntnet-dev,
     pkg-config,
     debhelper (>= 9)
@@ -16,6 +17,7 @@ Section: devel
 Depends:
     cmake (>=3.13),
     fty-cmake-dev,
+    fty-utils-dev,
     libtntnet-dev,
     pkg-config
 Description: CMake helper for rest with tntnet 
