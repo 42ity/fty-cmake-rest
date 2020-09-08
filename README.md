@@ -4,11 +4,11 @@ Helper for creating tntnet rest servlet with cmake
 # How to use
 See example folder.
 
-# Other way how create tntnet method
+# Other way how to create tntnet method
 
-More simpliest and natural than ecpp generate.
+This way could be more simpliest and natural than ecpp generate.
 
-Example (to use with fty::pack):
+Example (with use of fty::pack):
 
 
 Header:
@@ -60,7 +60,7 @@ unsigned MyMethod::run()
 {
     Params params;
 
-    // This is a post method with json input parameters (defininition as Params class)
+    // This is a post method with json input parameters (defininition in Params class)
     if (auto res = pack::json::deserialize(m_request.getBody(), params); !res) {
         // Something going wrong, you could log res.error() or append this error to output.
         // In example just returns "bad-input" error.
