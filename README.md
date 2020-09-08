@@ -12,7 +12,7 @@ Example (with use of fty::pack):
 
 
 Header:
-```
+```c++
 #pragma once
 #include <fty/rest-support.h>
 
@@ -29,7 +29,7 @@ public:
 
 
 Implementation:
-```
+```c++
 #include "mymethod.h"
 #include <pack/pack.h>
 
