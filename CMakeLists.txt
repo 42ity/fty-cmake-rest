@@ -8,7 +8,6 @@ project(fty-cmake-rest
 )
 
 ##############################################################################################################
-include(CTest)
 
 find_package(fty-cmake PATHS ${CMAKE_BINARY_DIR}/fty-cmake)
 

@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.13)
 
 ##############################################################################################################
 find_package(fty-cmake PATHS ${CMAKE_BINARY_DIR}/fty-cmake)
-find_package(fty-cmake-rest PATHS ${CMAKE_BINARY_DIR}/fty-cmake-rest)
-
 ##############################################################################################################
 
 project(fty-cmake-rest-test
@@ -14,10 +12,10 @@ project(fty-cmake-rest-test
 ##############################################################################################################
 set(CMAKE_LIBRARY_DIR "${CMAKE_INSTALL_PREFIX}/lib/bios")
 
-etn_target(shared
-    ${PROJECT_NAME}
-        USES
-            tntnet
+etn_target(shared ${PROJECT_NAME}
+    USES
+        tntnet
+        fty-cmake-rest
 )
 
 fty_ecppbuilder(
