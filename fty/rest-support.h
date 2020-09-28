@@ -1,13 +1,13 @@
 #pragma once
+#include "error-string.h"
 #include <fty/expected.h>
+#include <fty/flags.h>
 #include <fty_common_rest_helpers.h>
 #include <fty_log.h>
 #include <tnt/componentfactory.h>
 #include <tnt/ecpp.h>
 #include <tnt/httpreply.h>
 #include <tnt/httprequest.h>
-#include "error-string.h"
-#include <fty/flags.h>
 
 namespace rest {
 
@@ -62,7 +62,7 @@ protected:
         return var;
     }
 
-    fty::Expected<void, Error> checkPermissions(const UserInfo& user, const Permissions& permissions)
+    fty::Expected<void, ErrorMsg> checkPermissions(const UserInfo& user, const Permissions& permissions)
     {
         if (permissions.count(user.profile()) != 1) {
             return fty::unexpected(error("Permission not defined for given profile"));
@@ -89,8 +89,8 @@ protected:
         return fty::unexpected(error("not-authorized"));
     }
 
-    template<typename T, bool required = false>
-    fty::Expected<T, Error> queryValue(const std::string& name) const
+    template <typename T, bool required = false>
+    fty::Expected<T, ErrorMsg> queryValue(const std::string& name) const
     {
         if (m_qparam.has(name)) {
             std::string strVal = m_qparam.param(name);
@@ -101,10 +101,56 @@ protected:
         }
         return T{};
     }
+
+    template <typename... Args>
+    unsigned handleError(const std::string& msg, const Args&... args)
+    {
+        auto err = rest::error(msg, args...);
+        m_reply.out() << err.message << "\n\n";
+        return err.code;
+    }
+
 protected:
     tnt::HttpRequest& m_request;
     tnt::HttpReply&   m_reply;
     tnt::QueryParams& m_qparam;
+};
+
+// =====================================================================================================================
+
+class ErrorBase : public std::runtime_error
+{
+public:
+    ErrorBase(const ErrorMsg& msg)
+        : std::runtime_error(msg.message)
+        , m_message(msg)
+    {
+    }
+
+    const std::string& message() const
+    {
+        return m_message.message;
+    }
+
+    unsigned code() const
+    {
+        return m_message.code;
+    }
+
+private:
+    ErrorMsg m_message;
+};
+
+class Error : public ErrorBase
+{
+public:
+    using ErrorBase::ErrorBase;
+
+    template <typename... Args>
+    Error(const std::string& msg, const Args&... args)
+        : ErrorBase(rest::error(msg, args...))
+    {
+    }
 };
 
 // =====================================================================================================================
@@ -117,8 +163,14 @@ public:
 
     unsigned operator()(tnt::HttpRequest& request, tnt::HttpReply& reply, tnt::QueryParams& qparam)
     {
-        T runner(request, reply, qparam);
-        return runner.run();
+        try {
+            reply.setContentType("application/json;charset=UTF-8");
+            T runner(request, reply, qparam);
+            return runner.run();
+        } catch (const Error& err) {
+            reply.out() << err.message() << "\n\n";
+            return err.code();
+        }
     }
 };
 
@@ -133,3 +185,7 @@ inline std::vector<std::unique_ptr<tnt::ComponentFactory>> services;
         services.emplace_back(std::make_unique<tnt::ComponentFactoryImpl<rest::Rest<name>>>(name::NAME));              \
         return true;                                                                                                   \
     }();
+
+#define INIT_REST(name)                                                                                                \
+    static constexpr const char* NAME = name;                                                                          \
+    using rest::Runner::Runner\

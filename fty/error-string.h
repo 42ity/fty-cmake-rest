@@ -51,14 +51,14 @@ struct TranslateMessage : public pack::Node
     META(TranslateMessage, key, vars);
 };
 
-struct Error
+struct ErrorMsg
 {
     std::string message;
     unsigned    code;
 };
 
 template <typename... Args>
-Error error(const std::string& key, const Args&... args)
+ErrorMsg error(const std::string& key, const Args&... args)
 {
     auto msg = std::find_if(_errors.begin(), _errors.end(), [&](const WSError& err) {
         return err.key == key;
