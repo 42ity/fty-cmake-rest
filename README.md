@@ -4,9 +4,9 @@ Helper for creating tntnet rest servlet with cmake
 # How to use
 See example folder.
 
-# Other way how to create tntnet method
+# Other way to create tntnet method
 
-This way could be more simpliest and natural than ecpp generate.
+This way it would be simpler and more natural than generating ecpp.
 
 Example (with use of fty::pack):
 
