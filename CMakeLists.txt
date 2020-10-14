@@ -13,10 +13,16 @@ find_package(fty-cmake PATHS ${CMAKE_BINARY_DIR}/fty-cmake)
 
 ##############################################################################################################
 
-etn_target(interface ${PROJECT_NAME}
+etn_target(static ${PROJECT_NAME}
     PUBLIC
         fty/rest-support.h
         fty/error-string.h
+        fty/audit-log.h
+
+        fty/rest/translate.h
+        fty/rest/runner.h
+
+        src/runner.cpp
     CMAKE
         cmake/ecppbuilder.cmake
     USES_PUBLIC
@@ -29,4 +35,5 @@ etn_target(interface ${PROJECT_NAME}
 if (BUILD_TESTING)
     include(cmake/ecppbuilder.cmake)
     add_subdirectory(example)
+    add_subdirectory(test)
 endif()
