@@ -1,7 +1,7 @@
 #pragma once
 
-#include <fmt/core.h>
 #include <fty_log.h>
+#include <fty/translate.h>
 
 
 // =====================================================================================================================
@@ -22,7 +22,7 @@
     auditLog(log4cplus::FATAL_LOG_LEVEL, __VA_ARGS__)
 
 #define auditLog(level, ...) \
-    fty::audit::LogManager::getInstance()->insertLog(level, __FILE__, __LINE__, __func__, fmt::format(__VA_ARGS__).c_str())
+    fty::audit::LogManager::getInstance()->insertLog(level, __FILE__, __LINE__, __func__, fty::audit::format(__VA_ARGS__).c_str())
 
 // =====================================================================================================================
 
@@ -66,5 +66,22 @@ public:
         Ftylog::clearContext();
     }
 };
+
+inline std::string format(const std::string& str)
+{
+    return str;
+}
+
+template<typename... Args>
+inline std::string format(const std::string& str, const Args&... args)
+{
+    return fmt::format(str, args...);
+}
+
+template<typename... Args>
+inline std::string format(Translate& trans, const Args&... args)
+{
+    return trans.format(args...).toString();
+}
 
 } // namespace fty::audit

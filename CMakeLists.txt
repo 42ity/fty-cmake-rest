@@ -15,14 +15,19 @@ find_package(fty-cmake PATHS ${CMAKE_BINARY_DIR}/fty-cmake)
 
 etn_target(static ${PROJECT_NAME}
     PUBLIC
-        fty/rest-support.h
-        fty/error-string.h
-        fty/audit-log.h
-
-        fty/rest/translate.h
+        fty/rest/audit-log.h
+        fty/rest/component.h
+        fty/rest/error.h
         fty/rest/runner.h
+        fty/rest/translate.h
+        fty/rest/reply.h
+        fty/rest/request.h
+        fty/rest/user.h
 
         src/runner.cpp
+        src/reply.cpp
+        src/request.cpp
+        src/user.cpp
     CMAKE
         cmake/ecppbuilder.cmake
     USES_PUBLIC
