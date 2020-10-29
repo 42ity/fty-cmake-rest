@@ -168,7 +168,7 @@ public:
             T runner(request, reply, qparam);
             return runner.run();
         } catch (const Error& err) {
-            reply.out() << err.message() << "\n\n";
+            reply.out() << "{ \"errors\": [ { \"message\": " << err.message() << "}]}\n\n";
             return err.code();
         }
     }
