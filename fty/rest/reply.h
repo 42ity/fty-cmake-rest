@@ -11,6 +11,7 @@ class Reply
 {
 public:
     void setContentType(const std::string& cntType);
+    void setHeader(const std::string& key, const std::string& value);
     tnt::HttpReply& handler() const;
 
     Reply& operator<<(const std::string& cnt);

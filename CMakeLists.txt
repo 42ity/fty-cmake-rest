@@ -13,7 +13,7 @@ find_package(fty-cmake PATHS ${CMAKE_BINARY_DIR}/fty-cmake)
 
 ##############################################################################################################
 
-etn_target(static ${PROJECT_NAME}
+etn_target(shared ${PROJECT_NAME}
     PUBLIC
         fty/rest/audit-log.h
         fty/rest/component.h
@@ -30,6 +30,8 @@ etn_target(static ${PROJECT_NAME}
         src/user.cpp
     CMAKE
         cmake/ecppbuilder.cmake
+    USES_PRIVATE
+        fty_common_rest
     USES_PUBLIC
         fty-utils
         fty-pack
@@ -38,7 +40,7 @@ etn_target(static ${PROJECT_NAME}
 ##############################################################################################################
 
 if (BUILD_TESTING)
-    include(cmake/ecppbuilder.cmake)
-    add_subdirectory(example)
+    #include(cmake/ecppbuilder.cmake)
+    #add_subdirectory(example)
     add_subdirectory(test)
 endif()

@@ -52,6 +52,9 @@ public:
         }
     }
 
+    size_t contentSize() const;
+    Expected<std::string> multipart(const std::string& name) const;
+
 private:
     Request(tnt::HttpRequest& request, tnt::QueryParams& params);
     void* getGlobalVariable(const std::string& name, std::function<void*()>&& createFunc) const;

@@ -4,9 +4,9 @@
 
 namespace fty::rest {
 
-Request::Request(tnt::HttpRequest& request, tnt::QueryParams& params):
-    m_request(request),
-    m_params(params)
+Request::Request(tnt::HttpRequest& request, tnt::QueryParams& params)
+    : m_request(request)
+    , m_params(params)
 {
     if (m_request.isMethodGET()) {
         m_type = Type::Get;
@@ -52,7 +52,7 @@ const std::string& Request::body() const
 void* Request::getGlobalVariable(const std::string& name, std::function<void*()>&& createFunc) const
 {
     tnt::Scope& scope = m_request.getRequestScope();
-    void* var = scope.get<void*>(name);
+    void*       var   = scope.get<void*>(name);
 
     if (!var) {
         var = createFunc();
@@ -66,9 +66,25 @@ Expected<std::string> Request::_queryArg(const std::string& name) const
 {
     if (m_params.has(name)) {
         std::string strVal = m_params.param(name);
-        return std::move(strVal);
+        return strVal;
     }
     return unexpected("{} not exists", name);
 }
 
+size_t Request::contentSize() const
+{
+    return m_request.getContentSize();
 }
+
+Expected<std::string> Request::multipart(const std::string& name) const
+{
+    const tnt::Multipart& mp = m_request.getMultipart();
+    auto                  it = mp.find(name);
+    if (it == mp.end()) {
+        return unexpected("No such {} miltipart", name);
+    }
+
+    return it->getBody();
+}
+
+} // namespace fty::rest
