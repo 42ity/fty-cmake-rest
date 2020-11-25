@@ -4,6 +4,7 @@ Build-Depends:
     cmake (>=3.13),
     fty-cmake-dev,
     fty-utils-dev,
+    libfty-common-rest-dev,
     libfty-pack-dev,
     libtntnet-dev,
     pkg-config,
