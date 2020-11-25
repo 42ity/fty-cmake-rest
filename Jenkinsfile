@@ -1,5 +1,9 @@
+@Library('etn-ipm2-jenkins') _
+
 pipeline {
-    agent { label "devel-image && x86_64 && OSIMAGE_DISTRO=Debian_10.0" }
+    agent {
+        label infra.getAgentLabels()
+    }
 
     parameters {
         //booleanParam name: 'RUN_MEMCHECKS', defaultValue: true, description: 'Run memchecks?'
