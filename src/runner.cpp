@@ -41,7 +41,7 @@ fty::Expected<void, ErrorMsg> Runner::checkPermissions(const User::Profile& prof
         return {};
     }
 
-    return unexpected(error("not-authorized"));
+    return unexpected(error(ErrCode::NotAuthorized));
 }
 
 // =====================================================================================================================

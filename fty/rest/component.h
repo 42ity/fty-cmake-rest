@@ -19,7 +19,7 @@ public:
             T runner(request, reply, qparam);
             return runner.run();
         } catch (const Error& err) {
-            reply.out() << json(err.message()) << "\n\n";
+            reply.out() << "{ \"errors\": [ { \"message\": " << json(err.message()) << "}]}\n\n";
             return err.code();
         }
     }
