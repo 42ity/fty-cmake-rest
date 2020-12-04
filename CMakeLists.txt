@@ -23,11 +23,12 @@ etn_target(shared ${PROJECT_NAME}
         fty/rest/reply.h
         fty/rest/request.h
         fty/rest/user.h
-
+    SOURCES
         src/runner.cpp
         src/reply.cpp
         src/request.cpp
         src/user.cpp
+        src/error.cpp
     CMAKE
         cmake/ecppbuilder.cmake
     USES_PRIVATE

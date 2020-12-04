@@ -65,3 +65,15 @@ TEST_CASE("Translate/concatination")
     }
 }
 
+TEST_CASE("Translate/copy")
+{
+    auto t1 = "RIP {}"_tr;
+    t1.format("parrot");
+
+    auto t2 = t1;
+
+    CHECK(t1.toString() == t2.toString());
+
+    fty::Translate t3(t1);
+    CHECK(t3.toString() == t2.toString());
+}

@@ -100,21 +100,9 @@ ErrorMsg error(const Translate& key, const Args&... args)
 class RestError : public std::runtime_error
 {
 public:
-    RestError(const ErrorMsg& msg)
-        : std::runtime_error(msg.message.toString())
-        , m_message(msg)
-    {
-    }
-
-    const Translate& message() const
-    {
-        return m_message.message;
-    }
-
-    uint16_t code() const
-    {
-        return m_message.code;
-    }
+    RestError(const ErrorMsg& msg);
+    const Translate& message() const;
+    uint16_t code() const;
 
 private:
     ErrorMsg m_message;

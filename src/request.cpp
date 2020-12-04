@@ -66,9 +66,15 @@ Expected<std::string> Request::_queryArg(const std::string& name) const
 {
     if (m_params.has(name)) {
         std::string strVal = m_params.param(name);
-        return strVal;
+        return Expected<std::string>(strVal);
+    } else {
+        const auto& args = m_request.getArgs();
+        if (args.find(name) == args.end()){
+            return unexpected("{} not exists", name);
+        }
+        std::string strVal = args.at(name);
+        return Expected<std::string>(strVal);
     }
-    return unexpected("{} not exists", name);
 }
 
 size_t Request::contentSize() const
