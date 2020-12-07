@@ -18,7 +18,7 @@ public:
             reply.setContentType("application/json;charset=UTF-8");
             T runner(request, reply, qparam);
             return runner.run();
-        } catch (const Error& err) {
+        } catch (const rest::Error& err) {
             reply.out() << "{ \"errors\": [ { \"message\": " << json(err.message()) << "}]}\n\n";
             return err.code();
         }
