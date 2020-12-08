@@ -13,11 +13,18 @@ Standards-Version: 1.0.0
 Section: devel
 Priority: extra
 
+Package: libfty-cmake-rest
+Architecture: any
+Depends:    ${shlibs:Depends},
+            ${misc:Depends}
+Description: fty-cmake-rest library
+
 Package: fty-cmake-rest-dev
 Architecture: any
 Section: devel
 Depends:
     cmake (>=3.13),
+    libfty-cmake-rest,
     fty-cmake-dev,
     fty-utils-dev,
     libfty-pack-dev,
