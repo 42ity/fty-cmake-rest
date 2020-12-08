@@ -18,10 +18,8 @@ namespace details {
     };
 } // namespace details
 
-inline std::string json(const Translate& trans)
+inline void json(const Translate& trans, details::TranslateMessage& out)
 {
-    details::TranslateMessage tr;
-
     static std::regex rex("\\{([^\\}]*)\\}");
     static std::regex rex2("@\\[([^(\\]@)]*)\\]@");
 
@@ -40,12 +38,17 @@ inline std::string json(const Translate& trans)
     while (std::regex_search(view, match, rex2)) {
         std::string name = "var" + std::to_string(++index);
         res += match.prefix().str() + "{{" + name + "}}";
-        tr.vars.append(name, match[1].str());
+        out.vars.append(name, match[1].str());
         view = match.suffix();
     }
     res += view;
-    tr.key = res;
+    out.key = res;
+}
 
+inline std::string json(const Translate& trans)
+{
+    details::TranslateMessage tr;
+    json(trans, tr);
     return *pack::json::serialize(tr);
 }
 
