@@ -3,7 +3,7 @@ Maintainer: Clement Perrette <clementperrette@eaton.com>
 Build-Depends:
     cmake (>=3.13),
     fty-cmake-dev,
-    fty-utils-dev,
+    libfty-utils-dev,
     libfty-common-rest-dev,
     libfty-pack-dev,
     libtntnet-dev,
@@ -19,15 +19,17 @@ Depends:    ${shlibs:Depends},
             ${misc:Depends}
 Description: fty-cmake-rest library
 
-Package: fty-cmake-rest-dev
+Package: libfty-cmake-rest-dev
 Architecture: any
 Section: devel
+Provides: fty-cmake-rest-dev
 Depends:
     cmake (>=3.13),
     libfty-cmake-rest,
     fty-cmake-dev,
-    fty-utils-dev,
+    libfty-utils-dev,
     libfty-pack-dev,
     libtntnet-dev,
     pkg-config
 Description: CMake helper for rest with tntnet 
+ Note the historic misnomer "fty-cmake-rest-dev" is an alias for this package
