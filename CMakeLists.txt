@@ -32,7 +32,10 @@ etn_target(shared ${PROJECT_NAME}
     CMAKE
         cmake/ecppbuilder.cmake
     USES_PRIVATE
+        czmq
+        fty_common
         fty_common_rest
+        fty_common_logging
     USES_PUBLIC
         fty-utils
         fty-pack
