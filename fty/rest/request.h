@@ -54,6 +54,7 @@ public:
 
     size_t contentSize() const;
     Expected<std::string> multipart(const std::string& name) const;
+    std::string path() const;
 
 private:
     Request(tnt::HttpRequest& request, tnt::QueryParams& params);

@@ -93,4 +93,9 @@ Expected<std::string> Request::multipart(const std::string& name) const
     return it->getBody();
 }
 
+std::string Request::path() const
+{
+    return m_request.getPathInfo();
+}
+
 } // namespace fty::rest

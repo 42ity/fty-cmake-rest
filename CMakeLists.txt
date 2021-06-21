@@ -32,6 +32,8 @@ etn_target(shared ${PROJECT_NAME}
     CMAKE
         cmake/ecppbuilder.cmake
     USES_PRIVATE
+        cxxtools
+        tntnet
         czmq
         fty_common
         fty_common_rest
