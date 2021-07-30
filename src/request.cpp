@@ -97,5 +97,10 @@ std::string Request::typeStr() const
 {
     return m_request.getMethod();
 }
+  
+std::string Request::path() const
+{
+    return m_request.getPathInfo();
+}
 
 } // namespace fty::rest

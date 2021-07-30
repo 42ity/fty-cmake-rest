@@ -1,4 +1,3 @@
-find_program(Ecppc_EXECUTABLE NAMES ecppc)
 
 macro(fty_ecppbuilder)
     cmake_parse_arguments(arg
@@ -9,14 +8,13 @@ macro(fty_ecppbuilder)
     )
 
     if (NOT Ecppc_EXECUTABLE)
-        message(FATAL_ERROR "Ecpp compiler was not found, please install `libtntnet-dev`")
+        find_program(Ecppc_EXECUTABLE NAMES ecppc PATHS ${CMAKE_BINARY_DIR}/deps-runtime/bin)
+        #message(FATAL_ERROR "Ecpp compiler was not found, please install `libtntnet-dev`")
     else()
         message("-- Ecpp compiler found: ${Ecppc_EXECUTABLE}")
     endif()
 
     add_dependencies(${arg_TARGET} tntnet)
-
-    set(ecppc ${Ecppc_EXECUTABLE})
 
     if (arg_WORKDIR)
         get_filename_component(arg_WORKDIR ${arg_WORKDIR} ABSOLUTE)
@@ -24,22 +22,24 @@ macro(fty_ecppbuilder)
 
     foreach(ecppf ${arg_ECPP})
         get_filename_component(abs ${ecppf} ABSOLUTE)
+        file(RELATIVE_PATH relPath ${CMAKE_CURRENT_SOURCE_DIR} ${abs})
+
         if (NOT arg_WORKDIR)
             get_filename_component(inc ${abs} DIRECTORY)
         else()
             set(inc ${arg_WORKDIR})
         endif()
 
-        file(RELATIVE_PATH relPath ${inc} ${abs})
         get_filename_component(outDir ${relPath} DIRECTORY)
         get_filename_component(genName ${ecppf} NAME_WE)
 
         set(result ${CMAKE_CURRENT_BINARY_DIR}/${outDir}/${genName}.cpp)
+        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${outDir})
 
         add_custom_command(
-            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${outDir}/${genName}.cpp
-            COMMAND ${ecppc} -I ${inc} ${abs} -o ${CMAKE_CURRENT_BINARY_DIR}/${outDir}/${genName}.cpp
-            DEPENDS ${ecppf}
+            OUTPUT ${result}
+            COMMAND ${Ecppc_EXECUTABLE} -I ${inc} ${abs} -o ${result}
+            DEPENDS ${ecppf} ${Ecppc_EXECUTABLE}
         )
         target_sources(${arg_TARGET} PRIVATE ${result})
         target_sources(${arg_TARGET} PRIVATE ${ecppf})
