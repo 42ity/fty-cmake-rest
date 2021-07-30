@@ -23,6 +23,7 @@ public:
     };
 
     Type type() const;
+    std::string typeStr() const;
 
     tnt::HttpRequest& request() const;
     tnt::QueryParams& params() const;
