@@ -54,4 +54,4 @@ protected:
 
 #define INIT_REST(name)                                                                                                \
     static constexpr const char* NAME = name;                                                                          \
-    using rest::Runner::Runner
+    using fty::rest::Runner::Runner
