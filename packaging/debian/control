@@ -1,5 +1,5 @@
 Source: fty-cmake-rest
-Maintainer: Clement Perrette <clementperrette@eaton.com>
+Maintainer: fty-cmake-rest Developers <opensource@eaton.com>
 Build-Depends:
     cmake (>=3.13),
     fty-cmake-dev,
@@ -31,5 +31,5 @@ Depends:
     libfty-pack-dev,
     libtntnet-dev,
     pkg-config
-Description: CMake helper for rest with tntnet 
+Description: CMake helper for rest with tntnet
  Note the historic misnomer "fty-cmake-rest-dev" is an alias for this package
