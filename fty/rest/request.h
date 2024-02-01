@@ -2,6 +2,7 @@
 #include <string>
 #include <functional>
 #include <fty/expected.h>
+#include <tnt/httprequest.h>
 
 namespace tnt {
 class HttpRequest;
@@ -51,6 +52,10 @@ public:
         } else {
             return unexpected(val.error());
         }
+    }
+
+    bool isParamsEmpty() {
+       return m_params.empty();
     }
 
     size_t contentSize() const;

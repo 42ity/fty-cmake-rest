@@ -1,5 +1,4 @@
 #include "fty/rest/request.h"
-#include <tnt/httprequest.h>
 #include <tnt/query_params.h>
 
 namespace fty::rest {
