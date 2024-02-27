@@ -1,3 +1,4 @@
 /usr/lib/*/pkgconfig/*
 /usr/share/*
 /usr/include/*
+/etc/*

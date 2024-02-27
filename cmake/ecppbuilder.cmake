@@ -39,6 +39,7 @@ macro(fty_ecppbuilder)
         add_custom_command(
             OUTPUT ${result}
             COMMAND ${Ecppc_EXECUTABLE} -I ${inc} ${abs} -o ${result}
+            COMMAND /etc/fty-cmake-rest/disable-logtrace.sh ${result}
             DEPENDS ${ecppf} ${Ecppc_EXECUTABLE}
         )
         target_sources(${arg_TARGET} PRIVATE ${result})
