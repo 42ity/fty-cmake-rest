@@ -33,6 +33,6 @@ inline std::vector<std::unique_ptr<tnt::ComponentFactory>> services;
 #define registerHandler(name)                                                                                          \
     static auto _init = []() {                                                                                         \
         fty::rest::services.emplace_back(                                                                              \
-            std::make_unique<tnt::ComponentFactoryImpl<fty::rest::Rest<name>>>(name::NAME));                           \
+            std::make_unique<tnt::EcppComponentFactoryImpl<fty::rest::Rest<name>>>(name::NAME));                       \
         return true;                                                                                                   \
     }();
