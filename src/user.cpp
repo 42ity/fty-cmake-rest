@@ -1,5 +1,5 @@
-#include "fty/rest/user.h"
 #include <fty_common_rest_helpers.h>
+#include "fty/rest/user.h"
 #include "fty/rest/request.h"
 
 namespace fty::rest {
@@ -11,22 +11,35 @@ User::User(const Request& req)
 
 User::Profile User::profile() const
 {
-    assert(m_info);
-    switch (m_info->profile()) {
-    case BiosProfile::Anonymous:
-        return Profile::Anonymous;
-    case BiosProfile::Admin:
-        return Profile::Admin;
-    case BiosProfile::Dashboard:
-        return Profile::Dashboard;
+    if (m_info) {
+        switch (m_info->profile()) {
+            case BiosProfile::Admin:
+                return Profile::Admin;
+            case BiosProfile::Dashboard:
+                return Profile::Dashboard;
+            default:;
+        }
     }
     return Profile::Anonymous;
 }
 
+std::string User::profileStr() const
+{
+    if (m_info) {
+        switch (m_info->profile()) {
+            case BiosProfile::Admin:
+                return "Admin";
+            case BiosProfile::Dashboard:
+                return "Dashboard";
+            default:;
+        }
+    }
+    return "Anonymous";
+}
+
 std::string User::login() const
 {
-    assert(m_info);
-    return m_info->login();
+    return m_info ? m_info->login() : "Unknown";
 }
 
 }

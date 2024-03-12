@@ -10,20 +10,16 @@ Request::Request(tnt::HttpRequest& request, tnt::QueryParams& params)
     if (m_request.isMethodGET()) {
         m_type = Type::Get;
     }
-
-    if (m_request.isMethodPOST()) {
+    else if (m_request.isMethodPOST()) {
         m_type = Type::Post;
     }
-
-    if (m_request.getMethod() == "PUT") {
+    else if (m_request.getMethod() == "PUT") {
         m_type = Type::Put;
     }
-
-    if (m_request.getMethod() == "DELETE") {
+    else if (m_request.getMethod() == "DELETE") {
         m_type = Type::Delete;
     }
-
-    if (m_request.isMethodHEAD()) {
+    else if (m_request.isMethodHEAD()) {
         m_type = Type::Head;
     }
 }
@@ -51,8 +47,8 @@ const std::string& Request::body() const
 void* Request::getGlobalVariable(const std::string& name, std::function<void*()>&& createFunc) const
 {
     tnt::Scope& scope = m_request.getRequestScope();
-    void*       var   = scope.get<void*>(name);
 
+    void* var = scope.get<void*>(name);
     if (!var) {
         var = createFunc();
         scope.put(name, var);
@@ -64,16 +60,15 @@ void* Request::getGlobalVariable(const std::string& name, std::function<void*()>
 Expected<std::string> Request::_queryArg(const std::string& name) const
 {
     if (m_params.has(name)) {
-        std::string strVal = m_params.param(name);
-        return Expected<std::string>(strVal);
-    } else {
-        const auto& args = m_request.getArgs();
-        if (args.find(name) == args.end()){
-            return unexpected("{} not exists", name);
-        }
-        std::string strVal = args.at(name);
-        return Expected<std::string>(strVal);
+        return m_params.param(name);
     }
+
+    const auto& args = m_request.getArgs();
+    if (args.find(name) != args.end()) {
+        return args.at(name);
+    }
+
+    return unexpected("Argument '{}' not found", name);
 }
 
 size_t Request::contentSize() const
@@ -84,19 +79,20 @@ size_t Request::contentSize() const
 Expected<std::string> Request::multipart(const std::string& name) const
 {
     const tnt::Multipart& mp = m_request.getMultipart();
-    auto                  it = mp.find(name);
-    if (it == mp.end()) {
-        return unexpected("No such {} miltipart", name);
+
+    auto it = mp.find(name);
+    if (it != mp.end()) {
+        return it->getBody();
     }
 
-    return it->getBody();
+    return unexpected("Multipart '{}' not found", name);
 }
 
 std::string Request::typeStr() const
 {
     return m_request.getMethod();
 }
-  
+
 std::string Request::path() const
 {
     return m_request.getPathInfo();

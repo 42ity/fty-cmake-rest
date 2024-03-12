@@ -20,11 +20,13 @@ public:
 public:
     User(const Request& req);
 
-    Profile     profile() const;
     std::string login() const;
 
+    Profile     profile() const;
+    std::string profileStr() const;
+
 private:
-    UserInfo* m_info = nullptr;
+    UserInfo* m_info{nullptr};
 };
 
 } // namespace fty::rest
