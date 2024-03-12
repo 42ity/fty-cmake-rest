@@ -3,8 +3,6 @@
 #include <tnt/httprequest.h>
 #include <tnt/ecpp.h>
 
-#include <iostream>
-
 namespace fty::rest {
 
 // =====================================================================================================================
@@ -20,13 +18,6 @@ Runner::~Runner() = default;
 
 fty::Expected<void, ErrorMsg> Runner::checkPermissions(const User::Profile& profile, const Permissions& permissions)
 {
-    {
-        User user{m_request};
-        std::cout << "=== Runner::checkPermissions : login(" << user.login() << "), profile(" << user.profileStr() << ")" << std::endl;
-    }
-
-    return {}; // WORKAROUND DO NOT MERGE ON RELEASE
-
     if (permissions.count(profile) != 1) {
         return unexpected(error("Permission not defined for given profile"_tr));
     }

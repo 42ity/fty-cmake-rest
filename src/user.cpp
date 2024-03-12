@@ -6,7 +6,7 @@ namespace fty::rest {
 
 User::User(const Request& req)
 {
-    m_info = &req.global<UserInfo>("UserInfo user");
+    m_info = &req.global<UserInfo>("UserInfo%user");
 }
 
 User::Profile User::profile() const

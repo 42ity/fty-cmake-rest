@@ -46,6 +46,7 @@ const std::string& Request::body() const
 
 void* Request::getGlobalVariable(const std::string& name, std::function<void*()>&& createFunc) const
 {
+    // see tnt/component.h TNT_SESSION_GLOBAL_VAR macro
     tnt::Scope& scope = m_request.getRequestScope();
 
     void* var = scope.get<void*>(name);
