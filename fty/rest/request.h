@@ -1,4 +1,24 @@
+/*  =========================================================================
+    Copyright (C) 2018 - 2020 Eaton
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+    =========================================================================
+*/
+
 #pragma once
+
 #include <string>
 #include <functional>
 #include <fty/expected.h>
@@ -31,7 +51,7 @@ public:
 
     const std::string& body() const;
 
-    /// Returns variable instance from the scope by key. If such variable is not exists, this variable will be created.
+    /// Returns variable instance from the scope by key. If such variable don't exists, this variable will be created.
     /// @param key key to get. Very weird. To be compatible with old stuff use it like `UserInfo info`
     template <typename VarT>
     VarT& global(const std::string& key) const
@@ -43,13 +63,14 @@ public:
         return *reinterpret_cast<VarT*>(ptr);
     }
 
-    /// Returns value from the request by it name.
+    /// Returns value from the request by its name.
     template <typename T>
     Expected<T> queryArg(const std::string& name) const
     {
         if (auto val = _queryArg(name)) {
             return convert<T>(*val);
-        } else {
+        }
+        else {
             return unexpected(val.error());
         }
     }
@@ -72,7 +93,7 @@ private:
 private:
     tnt::HttpRequest& m_request;
     tnt::QueryParams& m_params;
-    Type              m_type;
+    Type              m_type{Type::Get};
 };
 
 } // namespace fty::rest
