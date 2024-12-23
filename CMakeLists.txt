@@ -43,6 +43,8 @@ etn_target(shared ${PROJECT_NAME}
         fty-pack
 )
 
+set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR})
+
 # install sh script on /etc
 install(PROGRAMS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/disable-logtrace.sh DESTINATION ${CMAKE_INSTALL_FULL_SYSCONFDIR}/${PROJECT_NAME})
 
