@@ -21,6 +21,7 @@
 
 #include "fty/rest/translate.h"
 #include <climits>
+#include <cstdint>
 #include <tnt/http.h>
 
 namespace fty::rest {
